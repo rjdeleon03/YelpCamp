@@ -5,7 +5,6 @@ var express     = require("express"),
     Campground  = require("./models/campground")
     seedDB      = require("./seeds");
 
-seedDB();
 
 // Required for parsing post params
 app.use(bodyParser.urlencoded({extended: true}));
@@ -16,15 +15,12 @@ app.set("view engine", "ejs");
 // Connect mongoose
 mongoose.connect("mongodb://localhost/yelpcamp");
 
+// Seed database
+seedDB();
+
 app.get("/", function(req, res) {
     res.render("landing");
 });
-
-// Campground.create({
-//     name: "Riomaggiore",
-//     image: "https://images.unsplash.com/photo-1483984937723-e978b50f0e2a?ixlib=rb-0.3.5&s=f59f49aebad5e2e41271397acd1f440d&auto=format&fit=crop&w=1052&q=80",
-//     description: "Riomaggiore is a village and comune in the province of La Spezia, situated in a small valley in the Liguria region of Italy. It is the first of the Cinque Terre one meets when travelling north from La Spezia."
-// });
 
 // INDEX ROUTE
 app.get("/campgrounds", function(req, res) {
@@ -33,14 +29,14 @@ app.get("/campgrounds", function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.render("index", {campgrounds: campgrounds});
+            res.render("campgrounds/index", {campgrounds: campgrounds});
         }
     })
 });
 
 // NEW ROUTE
 app.get("/campgrounds/new", function(req, res) {
-    res.render("new");
+    res.render("campgrounds/new");
 });
 
 // CREATE ROUTE
@@ -73,7 +69,21 @@ app.get("/campgrounds/:id", function(req, res) {
             console.log(err);
         } else {
             console.log(foundCampground);
-            res.render("show.ejs", {campground: foundCampground});
+            res.render("campgrounds/show", {campground: foundCampground});
+        }
+    });
+});
+
+// ==================
+// COMMENTS ROUTES
+// ==================
+
+app.get("/campgrounds/:id/comments/new", function(req, res) {
+    Campground.findById(req.params.id, function(err, campground) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("comments/new", {campground: campground});
         }
     });
 });
