@@ -2,7 +2,10 @@ var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
-    Campground  = require("./models/campground");
+    Campground  = require("./models/campground")
+    seedDB      = require("./seeds");
+
+seedDB();
 
 // Required for parsing post params
 app.use(bodyParser.urlencoded({extended: true}));
@@ -65,10 +68,11 @@ app.post("/campgrounds", function(req, res) {
 
 // SHOW ROUTE
 app.get("/campgrounds/:id", function(req, res) {
-    Campground.findById(req.params.id, function (err, foundCampground) {
+    Campground.findById(req.params.id).populate("comments").exec(function (err, foundCampground) {
         if (err) {
             console.log(err);
         } else {
+            console.log(foundCampground);
             res.render("show.ejs", {campground: foundCampground});
         }
     });
