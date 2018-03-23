@@ -10,6 +10,9 @@ var express     = require("express"),
 // Required for parsing post params
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Include stylesheets
+app.use(express.static(__dirname + "/public"));
+
 // Treat all pages to render as ejs
 app.set("view engine", "ejs");
 
@@ -96,7 +99,7 @@ app.post("/campgrounds/:id/comments", function(req, res) {
             console.log(err);
             res.redirect("/campgrounds");
         } else {
-            
+
             // Create new comment
             Comment.create(req.body.comment, function(err, comment) {
                 if (err) {
