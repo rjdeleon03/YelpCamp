@@ -40,7 +40,7 @@ router.post("/", function(req, res) {
     );
 
     //Redirect to campgrounds page
-    res.redirect("/");
+    res.redirect("/campgrounds");
 });
 
 // Campgrounds Show
