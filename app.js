@@ -37,6 +37,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Add current user info in every route
+app.use(function(req, res, next) {
+    // Everything put in res.locals is available to all routes
+    res.locals.currentUser = req.user;
+    next();
+});
+
 app.get("/", function(req, res) {
     res.render("landing");
 });
