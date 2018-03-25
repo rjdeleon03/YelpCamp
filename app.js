@@ -1,6 +1,7 @@
 var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
+    methodOverride = require("method-override"),
     mongoose    = require("mongoose"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
@@ -24,6 +25,9 @@ app.set("view engine", "ejs");
 
 // Connect mongoose
 mongoose.connect("mongodb://localhost/yelpcamp");
+
+// Use method-override
+app.use(methodOverride("_method"));
 
 // Seed database
 seedDB();
