@@ -3,6 +3,7 @@ var express     = require("express"),
     bodyParser  = require("body-parser"),
     methodOverride = require("method-override"),
     mongoose    = require("mongoose"),
+    flash       = require("connect-flash"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
     Campground  = require("./models/campground"),
@@ -29,6 +30,9 @@ mongoose.connect("mongodb://localhost/yelpcamp");
 // Use method-override
 app.use(methodOverride("_method"));
 
+// Use connect-flash - must before passport
+app.use(flash());
+
 // Seed database
 // seedDB();
 
@@ -48,6 +52,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next) {
     // Everything put in res.locals is available to all routes
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
