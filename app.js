@@ -30,7 +30,7 @@ mongoose.connect("mongodb://localhost/yelpcamp");
 app.use(methodOverride("_method"));
 
 // Seed database
-seedDB();
+// seedDB();
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
