@@ -12,7 +12,7 @@ var express     = require("express"),
 
 var commentRoutes       = require("./routes/comments"),
     campgroundRoutes    = require("./routes/campgrounds"),
-    indexRoutes          = require("./routes/index");
+    indexRoutes         = require("./routes/index");
 
 // Required for parsing post params
 app.use(bodyParser.urlencoded({extended: true}));
