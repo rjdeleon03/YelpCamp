@@ -33,7 +33,12 @@
                     <a  class="btn btn-warning"
                         href="/campgrounds/<%= campground.id %>/edit">
                         Edit
-                    </a>    
+                    </a>   
+                    <form id="delete-form" action="/campgrounds/<%= campground.id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
                 </div>
             </div>
 
