@@ -64,13 +64,23 @@ router.get("/:commentId/edit", function(req, res) {
 });
 
 // Comments Update
-router.put("/:commentId/", function(req, res) {
+router.put("/:commentId", function(req, res) {
     Comment.findByIdAndUpdate(req.params.commentId, req.body.comment, function(err, foundComment) {
         if (err) {
             return res.redirect("back");
         }
-        res.redirect("/campgrounds/" + req.params.id)
+        res.redirect("/campgrounds/" + req.params.id);
     });
+});
+
+// Comments Destroy
+router.delete("/:commentId", function(req, res) {
+    Comment.findByIdAndRemove(req.params.commentId, function(err) {
+        if (err) {
+            return res.redirect("back");
+        }
+        res.redirect("/campgrounds/" + req.params.id);
+    })
 });
 
 // Middleware for logged in state checking
