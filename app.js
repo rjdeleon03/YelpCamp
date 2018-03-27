@@ -25,8 +25,10 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 // Connect mongoose
-// mongoose.connect("mongodb://localhost/yelpcamp");
-mongoose.connect("mongodb://pabs:dix120395@ds019886.mlab.com:19886/pabs-yelpcamp");
+// Use environment DB url (if deployed), else use local DB
+var databaseUrl = process.env.DATABASEURL || "mongodb://localhost/yelpcamp";
+console.log(databaseUrl);
+mongoose.connect(databaseUrl);
 
 // Use method-override
 app.use(methodOverride("_method"));
